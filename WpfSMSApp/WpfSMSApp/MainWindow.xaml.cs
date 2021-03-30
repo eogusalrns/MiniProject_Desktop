@@ -42,6 +42,7 @@ namespace WpfSMSApp
 
         private async void BtnLogOut_Click(object sender, RoutedEventArgs e)
         {
+            // TODO : 모든 화면을 해제하고 첫화면으로 전환할 것
             var result = await this.ShowMessageAsync("로그아웃", "로그아웃하시겠습니까?",
                 MessageDialogStyle.AffirmativeAndNegative, null);
             if (result == MessageDialogResult.Affirmative)

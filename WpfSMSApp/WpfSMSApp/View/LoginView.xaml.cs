@@ -3,6 +3,7 @@ using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -70,9 +71,14 @@ namespace WpfSMSApp.View
             {
                 var email = TxtEmail.Text;
                 var password = TxtPassword.Password;
+
+                var mdHash = MD5.Create();
+                //password = Common.GetMd5Hash(mdHash, password);
+
                 var isOurUser = Logic.DataAccess.GetUsers()
                     .Where(u => u.UserEmail.Equals(email) &&
                                 u.UserPassword.Equals(password)).Count();
+
                 if (isOurUser == 0)
                 {
                     LblResult.Visibility = Visibility.Visible;
@@ -86,6 +92,7 @@ namespace WpfSMSApp.View
                     Common.LOGINED_USER = Logic.DataAccess.GetUsers().Where(u => u.UserEmail.Equals(email)).FirstOrDefault();
                     Common.LOGGER.Info($"{email} 접속성공");
                     this.Visibility = Visibility.Hidden;
+
                 }
             }
             catch(Exception ex)

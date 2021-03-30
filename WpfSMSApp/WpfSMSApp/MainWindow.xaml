@@ -41,6 +41,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+            
             <Button x:Name="BtnProducts" 
                     Grid.Column="1" 
                     Content="제품" FontSize="16" Background="SkyBlue" Foreground="White"
@@ -54,6 +55,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+            
             <Button x:Name="BtnBookOut" 
                     Grid.Column="2" 
                     Content="출고" FontSize="16" Background="DodgerBlue" Foreground="White"
@@ -67,6 +69,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+            
             <Button x:Name="BtnStore" 
                     Grid.Column="3" 
                     Content="창고" FontSize="16" Background="CadetBlue" Foreground="White"
@@ -80,6 +83,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+            
             <Button x:Name="BtnSetting" 
                     Grid.Column="4" 
                     Content="설정" FontSize="16" Background="MidnightBlue" Foreground="White"
@@ -93,6 +97,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+            
             <Button x:Name="BtnUser" 
                     Grid.Column="5" 
                     Content="사용자" FontSize="16" Background="LightSteelBlue" Foreground="White"
@@ -106,6 +111,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+            
             <Button x:Name="BtnAccount" 
                     Grid.Column="6" 
                     Content="계정" FontSize="16" Background="CornflowerBlue"  Foreground="White"
@@ -119,6 +125,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+            
             <Button x:Name="BtnLogOut" 
                     Grid.Column="7" 
                     Content="로그아웃" FontSize="16" Background="BlueViolet" Foreground="White"
@@ -134,7 +141,7 @@
             </Button>
         </Grid>
         <Grid Background="WhiteSmoke">
-            <Frame  x:Name="ActiveControl"/><!--화면전환-->
+            <Frame  x:Name="ActiveControl" NavigationUIVisibility="Hidden"/><!--화면전환-->
         </Grid>
     </DockPanel>
 </mah:MetroWindow>
