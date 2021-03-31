@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfSMSApp.View;
 using WpfSMSApp.View.Account;
+using WpfSMSApp.View.User;
 
 namespace WpfSMSApp
 {
@@ -60,7 +61,7 @@ namespace WpfSMSApp
             view.ShowDialog();
         }
 
-        private void BtnAccount_Click(object sender, RoutedEventArgs e)
+        private async void BtnAccount_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -69,6 +70,20 @@ namespace WpfSMSApp
             catch (Exception ex)
             {
                 Common.LOGGER.Error($"예외발생 BtnAccount_Click : {ex}");
+                await this.ShowMessageAsync("예외", $"예외발생 : {ex}");
+            }
+        }
+
+        private async void BtnUser_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ActiveControl.Content = new UserList();
+            }
+            catch (Exception ex)
+            {
+                Common.LOGGER.Error($"예외발생 BtnAccount_Click : {ex}");
+                await this.ShowMessageAsync("예외", $"예외발생 : {ex}");
             }
         }
     }

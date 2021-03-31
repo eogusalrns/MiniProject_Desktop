@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro.Controls.Dialogs;
 
-namespace WpfSMSApp.View.Account
+namespace WpfSMSApp.View.User
 {
     /// <summary>
     /// MyAccountView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class EditAccountView : Page
+    public partial class AddUser : Page
     {
-        public EditAccountView()
+        public AddUser()
         {
             InitializeComponent();
         }
@@ -40,16 +41,6 @@ namespace WpfSMSApp.View.Account
                 };
                 CboUserAdmin.ItemsSource = comboValues;
                 CboUserActivated.ItemsSource = comboValues;
-
-                var user = Common.LOGINED_USER;
-                TxtUserID.Text = user.UserID.ToString();
-                TxtUserIdentityNumber.Text = user.UserIdentityNumber;
-                TxtUserSurName.Text = user.UserSurname;
-                TxtUserName.Text = user.UserName;
-                TxtUserEmail.Text = user.UserEmail;
-                //TxtUserPassword.Password = user.UserPassword;
-                CboUserAdmin.SelectedIndex = user.UserAdmin == false ? 0 : 1;
-                CboUserActivated.SelectedIndex = user.UserActivated == false ? 0 : 1;
                 
             }
             catch (Exception ex)
@@ -65,17 +56,25 @@ namespace WpfSMSApp.View.Account
             NavigationService.GoBack();
         }
 
-        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
+        public bool IsValidInput()
         {
-            bool isValid = true; // 입력된 값이 모두 만족하는지 판별하는 플래그
-
-            LblUserIdentityNumber.Visibility = LblUserSurName.Visibility =
-            LblUserName.Visibility = LblUserEmail.Visibility =
-            LblUserPassword.Visibility = LblUserAdmin.Visibility =
-            LblUserActivated.Visibility = Visibility.Hidden;
-
-            var user = Common.LOGINED_USER;
-
+            bool isValid = true;
+            if (string.IsNullOrEmpty(TxtUserIdentityNumber.Text))
+            {
+                LblUserSurName.Visibility = Visibility.Visible;
+                LblUserSurName.Text = "사번을 입력하세요.";
+                isValid = false;
+            }
+            else
+            {
+                var cnt = Logic.DataAccess.GetUsers().Where(u => u.UserIdentityNumber.Equals(TxtUserIdentityNumber.Text)).Count();
+                if (cnt > 0)
+                {
+                    LblUserIdentityNumber.Visibility = Visibility.Visible;
+                    LblUserIdentityNumber.Text = "중복된 사번이 존재합니다.";
+                    isValid = false;
+                }
+            }
             if (string.IsNullOrEmpty(TxtUserSurName.Text))
             {
                 LblUserSurName.Visibility = Visibility.Visible;
@@ -94,15 +93,61 @@ namespace WpfSMSApp.View.Account
                 LblUserEmail.Text = "이메일을 입력하세요.";
                 isValid = false;
             }
+            else
+            {
+                var cnt = Logic.DataAccess.GetUsers().Where(u => u.UserEmail.Equals(TxtUserEmail.Text)).Count();
+                if (cnt > 0)
+                {
+                    LblUserEmail.Visibility = Visibility.Visible;
+                    LblUserEmail.Text = "중복된 이메일이 존재합니다.";
+                    isValid = false;
+                }
+            }
             if (string.IsNullOrEmpty(TxtUserPassword.Password))
             {
                 LblUserPassword.Visibility = Visibility.Visible;
                 LblUserPassword.Text = "패스워드를 입력하세요.";
                 isValid = false;
             }
+            if (CboUserAdmin.SelectedIndex < 0)
+            {
+                LblUserAdmin.Visibility = Visibility.Visible;
+                LblUserAdmin.Text = "관리자여부를 선택하세요";
+                isValid = false;
+            }
+            if (CboUserActivated.SelectedIndex < 0)
+            {
+                LblUserActivated.Visibility = Visibility.Visible;
+                LblUserActivated.Text = "활성여부를 선택하세요";
+                isValid = false;
+            }
+            if (!Common.IsValidEmail(TxtUserEmail.Text))
+            {
+                LblUserEmail.Visibility = Visibility.Visible;
+                LblUserEmail.Text = "이메일 형식이 올바르지 않습니다.";
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            bool isValid = true; // 입력된 값이 모두 만족하는지 판별하는 플래그
+
+            LblUserIdentityNumber.Visibility = LblUserSurName.Visibility =
+            LblUserName.Visibility = LblUserEmail.Visibility =
+            LblUserPassword.Visibility = LblUserAdmin.Visibility =
+            LblUserActivated.Visibility = Visibility.Hidden;
+
+            var user = new Model.User();
+
+            isValid = IsValidInput();
+
+ 
             if (isValid)
             {
                 //MessageBox.Show("DB수정처리!");
+                user.UserIdentityNumber = TxtUserIdentityNumber.Text;
                 user.UserSurname = TxtUserSurName.Text;
                 user.UserName = TxtUserName.Text;
                 user.UserEmail = TxtUserEmail.Text;
@@ -119,14 +164,13 @@ namespace WpfSMSApp.View.Account
                     if (result == 0)
                     {
                         //수정 안됨
-                        LblResult.Text = "수정에 오류가 발생.";
+                        LblResult.Text = "사용자 입력에 오류가 발생.";
                         LblResult.Foreground = Brushes.OrangeRed;
                     }
                     else
                     {
                         //정상적 수정됨
-                        LblResult.Text = "정상적으로 수정했습니다.";
-                        LblResult.Foreground = Brushes.LightSkyBlue;
+                        NavigationService.Navigate(new UserList());
                     }
                 }
                 catch (Exception ex)
@@ -134,6 +178,11 @@ namespace WpfSMSApp.View.Account
                     Common.LOGGER.Error($"예외발생 : {ex}");
                 }
             }
+        }
+
+        private void TxtUserIdentityNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

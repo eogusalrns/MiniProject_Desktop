@@ -1,5 +1,5 @@
 ﻿<Page 
-    x:Class="WpfSMSApp.View.User.UserList"
+    x:Class="WpfSMSApp.View.User.EditUser"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:WpfSMSApp.View.User"
     mc:Ignorable="d" 
     d:DesignHeight="630" d:DesignWidth="1200"
-    Title="MyAccountView" Background="White" Loaded="Page_Loaded">
+    Title="EditUser" Background="AliceBlue" Loaded="Page_Loaded">
     <Page.Resources>
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="16"/>
@@ -31,56 +31,26 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="210"/>
-
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <!--제목입력 시작-->
-        <Label Content="계정리스트" FontSize="30" Grid.Column="1" FontWeight="ExtraBold"
+        <Label Content="사용자정보 비활성화" FontSize="30" Grid.Column="1" FontWeight="ExtraBold"
                VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"/>
         <!--제목입력 끝-->
         <!--버튼영역 시작-->
-        <StackPanel Grid.Column="2" Grid.RowSpan="2"/>
         <!--버튼영역 끝-->
-        <Grid Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="5">
-            <StackPanel>
-                <Button x:Name="BtnAddUser"
-                    FontSize="14"
-                    Background="DarkSlateBlue" Foreground="white"
-                    Content="사용자추가" Height="50" Margin="5,10" Click="BtnAddUser_Click">
-                </Button>
-                <Button x:Name="BtnEditUser"
-                    FontSize="14"
-                    Background="DarkSlateBlue" Foreground="white"
-                    Content="사용자수정" Height="50" Margin="5,10" Click="BtnEditUser_Click">
-                </Button>
-                <Button x:Name="BtnDeactivateUser"
-                    FontSize="14"
-                    Background="DarkSlateBlue" Foreground="white"
-                    Content="사용자비활성화" Height="50" Margin="5,10" Click="BtnDeactivateUser_Click">
-                </Button>
-                <Button x:Name="BtnExportPdf"
-                    FontSize="14"
-                    Background="Silver" Foreground="Black"
-                    Content="PDF익스포트" Height="50" Margin="5,10" Click="BtnExportPdf_Click">
-                </Button>
-            </StackPanel>
-        </Grid>
         <!--컨텐츠영역 시작-->
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <RadioButton x:Name="RdoAll" Content="모두" Checked="RdoAll_Checked"></RadioButton>
-                <RadioButton x:Name="RdoActive" Content="활성" Checked="RdoActive_Checked"></RadioButton>
-                <RadioButton x:Name="RdoUnActive" Content="비활성" Checked="RdoUnActive_Checked"></RadioButton>
-            </StackPanel>
             <DataGrid x:Name="GrdData" Grid.Row="1"
                       AutoGenerateColumns="False" SelectionUnit="FullRow"
                       Style="{StaticResource MahApps.Styles.DataGrid.Azure}"
                       GridLinesVisibility="Vertical"
-                      ItemsSource="{Binding}" SelectionChanged="GrdData_SelectionChanged">
+                      ItemsSource="{Binding}" Margin="10,0,-554,36">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding UserID}" Header="순번" Width="60"/>
                     <DataGridTextColumn Binding="{Binding UserIdentityNumber}" Header="사번" Width="1*"/>
@@ -91,7 +61,7 @@
                     <DataGridTextColumn Binding="{Binding UserAdmin}" Header="관리자여부" Width="85"/>
                     <DataGridTextColumn Binding="{Binding UserActivated}" Header="활성화여부" Width="*"/>
                 </DataGrid.Columns>
-                
+
             </DataGrid>
         </Grid>
         <!--컨텐츠영역 끝-->

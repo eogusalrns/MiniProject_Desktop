@@ -15,7 +15,7 @@ namespace WpfSMSApp.Logic
         /// </summary>
         /// <param name="user"></param>
         /// <returns>0또는 1이상</returns>
-        internal static int SetUser ( User user)
+        internal static int SetUser (User user)
         {
             using (var ctx = new SMSEntities())
             {

@@ -101,7 +101,7 @@
             <Button x:Name="BtnUser" 
                     Grid.Column="5" 
                     Content="사용자" FontSize="16" Background="LightSteelBlue" Foreground="White"
-                    Margin="5,10">
+                    Margin="5,10" Click="BtnUser_Click">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
