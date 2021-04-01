@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:WpfSMSApp.View.User"
+    xmlns:local="clr-namespace:WpfSMSApp.View.User" xmlns:iconPacks="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Codicons"
     mc:Ignorable="d" 
     d:DesignHeight="630" d:DesignWidth="1200"
     Title="MyAccountView" Background="White" Loaded="Page_Loaded">
@@ -25,57 +25,63 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="210"/>
-
         </Grid.ColumnDefinitions>
         <!--제목입력 시작-->
         <Label Content="계정리스트" FontSize="30" Grid.Column="1" FontWeight="ExtraBold"
                VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"/>
         <!--제목입력 끝-->
-        <!--버튼영역 시작-->
-        <StackPanel Grid.Column="2" Grid.RowSpan="2"/>
-        <!--버튼영역 끝-->
-        <Grid Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="5">
-            <StackPanel>
-                <Button x:Name="BtnAddUser"
+        <!-- 버튼영역 시작 -->
+        <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+            <Button x:Name="BtnAddUser" 
                     FontSize="14"
-                    Background="DarkSlateBlue" Foreground="white"
-                    Content="사용자추가" Height="50" Margin="5,10" Click="BtnAddUser_Click">
-                </Button>
-                <Button x:Name="BtnEditUser"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Content="사용자추가" Height="50" Margin="5,10,5,5" Click="BtnAddUser_Click">
+            </Button>
+            <Button x:Name="BtnEditUser" 
                     FontSize="14"
-                    Background="DarkSlateBlue" Foreground="white"
-                    Content="사용자수정" Height="50" Margin="5,10" Click="BtnEditUser_Click">
-                </Button>
-                <Button x:Name="BtnDeactivateUser"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Content="사용자수정" Height="50" Margin="5,5" Click="BtnEditUser_Click">
+            </Button>
+            <Button x:Name="BtnDeactivateUser" 
                     FontSize="14"
-                    Background="DarkSlateBlue" Foreground="white"
-                    Content="사용자비활성화" Height="50" Margin="5,10" Click="BtnDeactivateUser_Click">
-                </Button>
-                <Button x:Name="BtnExportPdf"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Content="사용자비활성화" Height="50" Margin="5,5" Click="BtnDeactivateUser_Click">
+            </Button>
+            <Button x:Name="BtnExportPdf" 
                     FontSize="14"
                     Background="Silver" Foreground="Black"
-                    Content="PDF익스포트" Height="50" Margin="5,10" Click="BtnExportPdf_Click">
-                </Button>
-            </StackPanel>
-        </Grid>
+                    Content="PDF익스포트" Height="50" Margin="5,5" Click="BtnExportPdf_Click">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" Margin="20, 0" VerticalAlignment="Center" />
+                            <iconPacks:PackIconCodicons Kind="FilePDF" Width="24" Height="24" />
+                        </StackPanel>
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+        </StackPanel>
+        <!-- 버튼영역 끝 -->
         <!--컨텐츠영역 시작-->
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <RadioButton x:Name="RdoAll" Content="모두" Checked="RdoAll_Checked"></RadioButton>
                 <RadioButton x:Name="RdoActive" Content="활성" Checked="RdoActive_Checked"></RadioButton>
                 <RadioButton x:Name="RdoUnActive" Content="비활성" Checked="RdoUnActive_Checked"></RadioButton>
             </StackPanel>
+            
             <DataGrid x:Name="GrdData" Grid.Row="1"
                       AutoGenerateColumns="False" SelectionUnit="FullRow"
                       Style="{StaticResource MahApps.Styles.DataGrid.Azure}"
@@ -87,11 +93,9 @@
                     <DataGridTextColumn Binding="{Binding UserName}" Header="이름" Width="1*"/>
                     <DataGridTextColumn Binding="{Binding UserSurname}" Header="성" Width="1*"/>
                     <DataGridTextColumn Binding="{Binding UserEmail}" Header="이메일" Width="2*"/>
-                    <!--<DataGridTextColumn Binding="{Binding UserPassword}" Header="비밀번호" Width="85"/>-->
                     <DataGridTextColumn Binding="{Binding UserAdmin}" Header="관리자여부" Width="85"/>
                     <DataGridTextColumn Binding="{Binding UserActivated}" Header="활성화여부" Width="*"/>
                 </DataGrid.Columns>
-                
             </DataGrid>
         </Grid>
         <!--컨텐츠영역 끝-->

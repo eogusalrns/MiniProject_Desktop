@@ -19,10 +19,6 @@ namespace WpfSMSApp.View.User
             InitializeComponent();
         }
 
-        private void ChangeLabelVisible(Visibility visible)
-        {
-
-        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -41,7 +37,11 @@ namespace WpfSMSApp.View.User
                 };
                 CboUserAdmin.ItemsSource = comboValues;
                 CboUserActivated.ItemsSource = comboValues;
-                
+
+                TxtUserID.Text = TxtUserIdentityNumber.Text = "";
+
+                List<Model.User> users = Logic.DataAccess.GetUsers();
+                this.DataContext = users;
             }
             catch (Exception ex)
             {

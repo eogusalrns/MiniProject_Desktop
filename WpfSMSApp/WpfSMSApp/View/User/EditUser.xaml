@@ -47,11 +47,11 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <DataGrid x:Name="GrdData2"
+            <DataGrid x:Name="GrdData"
                       AutoGenerateColumns="False" SelectionUnit="FullRow"
                       Style="{StaticResource MahApps.Styles.DataGrid.Azure}"
-                      GridLinesVisibility="Vertical"
-                      ItemsSource="{Binding}" Grid.RowSpan="2" Height="566" VerticalAlignment="Top" Margin="0,0,0,-76" SelectionChanged="GrdData2_SelectionChanged">
+                      GridLinesVisibility="Vertical" SelectedCellsChanged="GrdData_SelectedCellsChanged"
+                      ItemsSource="{Binding}" Grid.RowSpan="2" Height="566" VerticalAlignment="Top" Margin="0,0,0,-76">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding UserID}" Header="순번" Width="60"/>
                     <DataGridTextColumn Binding="{Binding UserIdentityNumber}" Header="사번" Width="1*"/>
@@ -62,7 +62,6 @@
                     <DataGridTextColumn Binding="{Binding UserAdmin}" Header="관리자여부" Width="85"/>
                     <DataGridTextColumn Binding="{Binding UserActivated}" Header="활성화여부" Width="*"/>
                 </DataGrid.Columns>
-
             </DataGrid>
         </Grid>
 
@@ -126,7 +125,7 @@
         </Grid>
         <!--컨텐츠영역 끝-->
         <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Width="260">
-            <Button x:Name="BtnAdd" Height="50" Width="120" Margin="10" Background="CornflowerBlue" Content="수정" FontSize="14" Click="BtnAdd_Click">
+            <Button x:Name="BtnAdd" Height="50" Width="120" Margin="10,0,10,-2" Background="CornflowerBlue" Content="수정" FontSize="14" Click="BtnAdd_Click">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
