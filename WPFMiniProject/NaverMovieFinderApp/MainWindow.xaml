@@ -49,17 +49,25 @@
             </Button>
         </StackPanel>
 
-        <DataGrid Grid.Row="2" Grid.Column="1" AutoGenerateColumns="True" Margin="10"
-                  Style="{StaticResource MahApps.Styles.DataGrid.Azure}">
-            
+        <DataGrid x:Name="GrdData" Grid.Row="2" Grid.Column="1" AutoGenerateColumns="False" Margin="10"
+                  Style="{StaticResource MahApps.Styles.DataGrid.Azure}" SelectionUnit="FullRow"
+                  GridLinesVisibility="Vertical" ItemsSource="{Binding}" SelectedCellsChanged="GrdData_SelectedCellsChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Title}" Header="한글제목"/>
+                <DataGridTextColumn Binding="{Binding SubTitle}" Header="영어제목"/>
+                <DataGridTextColumn Binding="{Binding PubDate}" Header="상영년도"/>
+                <DataGridTextColumn Binding="{Binding Director}" Header="감독"/>
+                <DataGridTextColumn Binding="{Binding Actor}" Header="배우"/>
+                <DataGridTextColumn Binding="{Binding UserRating}" Header="평점"/>
+            </DataGrid.Columns>
         </DataGrid>
 
         <Image x:Name="ImgPoster" Grid.Row="1" Grid.Column="2"
                Grid.RowSpan="2" Margin="10" Source="No_Image.jpg"></Image>
 
-        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Stretch">
             <Button x:Name="BtnAddWatchList" Content="즐겨찾기" Margin="5,10" Width="130" FontSize="12"
-                    Background="BlanchedAlmond">
+                    Background="BlanchedAlmond" Click="BtnAddWatchList_Click">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -70,7 +78,7 @@
                 </Button.ContentTemplate>
             </Button>
             <Button x:Name="BtnViewWatchList" Content="즐겨찾기보기" Margin="5,10" Width="130" FontSize="12"
-                    Background="DarkSeaGreen">
+                    Background="DarkSeaGreen" Click="BtnViewWatchList_Click">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -80,13 +88,35 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+            <Button x:Name="BtnDeleteWatchList" Content="즐겨찾기삭제" Margin="5,10" Width="130" FontSize="12"
+                    Background="OrangeRed" Click="BtnDeleteWatchList_Click">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" Margin="10,0"/>
+                            <iconpakcs:PackIconForkAwesome Kind="Trash"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
             <Button x:Name="BtnWatchTrailer" Content="예고편보기" Margin="5,10" Width="130" FontSize="12"
-                    Background="Honeydew">
+                    Background="Honeydew" Click="BtnWatchTrailer_Click">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding}" Margin="10,0"/>
                             <iconpakcs:PackIconForkAwesome Kind="YoutubePlay"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button x:Name="BtnNaverWatchTrailer" Content="네이버영화" Margin="5,10" Width="130" FontSize="12"
+                    Background="Cornsilk" Click="BtnNaverWatchTrailer_Click">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" Margin="10,0"/>
+                            <iconpakcs:PackIconForkAwesome Kind="Link"/>
                         </StackPanel>
                     </DataTemplate>
                 </Button.ContentTemplate>

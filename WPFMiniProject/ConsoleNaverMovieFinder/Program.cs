@@ -16,7 +16,7 @@ namespace ConsoleNaverMovieFinder
             string clientID = "kZwov3BYbBv2fCrJKz4Y";
             string clientSecret = "RykwuCjDVG";
             string search = "deathnote"; // 변경 가능
-            string openApiUrl = "https://openapi.naver.com/v1/search/movie?query={search}";
+            string openApiUrl = $"https://openapi.naver.com/v1/search/movie?query={search}";
 
             string responseJson = GetOpenApiResult(openApiUrl,clientID,clientSecret);
             JObject parsedJson = JObject.Parse(responseJson);
@@ -35,6 +35,32 @@ namespace ConsoleNaverMovieFinder
             }
         }
 
-       
+        private static string GetOpenApiResult(string openApiUrl, string clientID, string clientSecret)
+        {
+            string result = "";
+
+            try
+            {
+                WebRequest request = WebRequest.Create(openApiUrl);
+                request.Headers.Add("X-Naver-Client-Id", clientID);
+                request.Headers.Add("X-Naver-Client-Secret", clientSecret);
+
+                WebResponse response = request.GetResponse();
+                Stream stream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(stream);
+
+                result = reader.ReadToEnd();
+
+                reader.Close();
+                stream.Close();
+                response.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"예외발생 : {ex}");
+            }
+
+            return result;
+        }
     }
 }
