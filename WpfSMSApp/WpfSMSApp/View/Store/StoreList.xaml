@@ -91,7 +91,7 @@
             <DataGrid x:Name="GrdData"
                       AutoGenerateColumns="False" SelectionUnit="FullRow"
                       Style="{StaticResource MahApps.Styles.DataGrid.Azure}"
-                      GridLinesVisibility="Vertical"
+                      GridLinesVisibility="Vertical" IsReadOnly="True"
                       ItemsSource="{Binding}" SelectionChanged="GrdData_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding StoreID}" Header="순번" Width="60" IsReadOnly="True"/>

@@ -12,9 +12,13 @@ namespace WpfSMSApp.View.Store
     /// <summary>
     /// MyAccountView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class AddStore : Page
+    public partial class EditStore : Page
     {
-        public AddStore()
+        private int StoreID { get; set; }
+        //수정할 창고
+        private Model.Store CurrentStore { get; set; }
+
+        public EditStore()
         {
             InitializeComponent();
         }
@@ -23,18 +27,34 @@ namespace WpfSMSApp.View.Store
         {
 
         }
+        /// <summary>
+        /// 추가생성자 StoreList에서 storeId를 받아옴
+        /// </summary>
+        /// <param name="storeId"></param>
+        public EditStore(int storeId) : this()
+        {
+            StoreID = storeId;
+        }
+
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LblStoreLocation.Visibility = LblStoreName.Visibility = Visibility.Hidden;
             TxtStordID.Text = TxtStoreName.Text = TxtStoreLocation.Text = "";
 
-            //콤보박스 초기화
-            //List<string> comboValues = new List<string>
-            //{
-            //    "False", // 0 index
-            //    "True"   // 1 index
-            //};
+            try
+            {
+                //Store테이블에서 내용 읽음
+                CurrentStore = Logic.DataAccess.GetStores().Where(s => s.StoreID.Equals(StoreID)).FirstOrDefault();
+                TxtStordID.Text = CurrentStore.StoreID.ToString();
+                TxtStoreName.Text = CurrentStore.StoreName;
+                TxtStoreLocation.Text = CurrentStore.StoreLocation;
+            }
+            catch (Exception ex)
+            {
+                Common.LOGGER.Error($"EditStore.xaml.cs Page_Loaded 예외발생 : {ex}");
+                Common.ShowMessageAsync("예외",$"예외발생 : {ex}");
+            }
         }
 
 
@@ -76,29 +96,26 @@ namespace WpfSMSApp.View.Store
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             bool isValid = true; // 입력된 값이 모두 만족하는지 판별하는 플래그
-
             LblStoreLocation.Visibility = LblStoreName.Visibility = Visibility.Hidden;
 
-            var store = new Model.Store();
-
+            
             isValid = IsValidInput(); // 유효성체크
-
  
             if (isValid)
             {
                 //MessageBox.Show("DB수정처리!");
-                store.StoreName = TxtStoreName.Text;
-                store.StoreLocation = TxtStoreLocation.Text;
-                
+                CurrentStore.StoreName = TxtStoreName.Text;
+                CurrentStore.StoreLocation = TxtStoreLocation.Text;
+
                 try
                 {
-                    var result = Logic.DataAccess.SetStore(store); // Logic.DataAccess.SetUser(user);
+                    var result = Logic.DataAccess.SetStore(CurrentStore); // Logic.DataAccess.SetUser(user);
 
                     if (result == 0)
                     {
                         //수정 안됨
-                        Common.LOGGER.Error("AddStroe.xaml.cs 창고정보 저장오류 발생");
-                        Common.ShowMessageAsync("오류", "저장시 오류가 발생했습니다");
+                        Common.LOGGER.Error("AddStroe.xaml.cs 창고정보 수정오류 발생");
+                        Common.ShowMessageAsync("오류", "수정시 오류가 발생했습니다");
                     }
                     else
                     {
